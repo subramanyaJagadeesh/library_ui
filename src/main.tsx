@@ -4,15 +4,20 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { Login } from './views/Login/Login.jsx';
+import Login from './views/Login/Login.jsx';
 import './styles/index.scss'
 import { Provider } from 'react-redux';
-import store from './redux/store.js';
+import  { store } from './redux/store.ts';
+import Dashboard from './views/Dashboard/Dashboard.tsx';
 
 const browserRouter = createBrowserRouter([
   {
     path: '/login',
     element: <Login />
+  },
+  {
+    path: '/',
+    element: <Dashboard />
   }
 ]);
 

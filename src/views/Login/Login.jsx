@@ -4,7 +4,7 @@ import { CONFIRM_PASSWORD, EMAIL, FNAME, INPUT_LABELS, LNAME, PASSWORD, PHONE, W
 
 import './Login.scss';
 
-export const Login = () => {
+const Login = () => {
   const {
     error,
     setNewUser,
@@ -30,24 +30,24 @@ export const Login = () => {
     </>
   )
 
-  const renderInputElem = (elemName, elemValue) => (
+  const renderInputElem = (elemName, elemValue, elemType) => (
     <div className="input-container">
       <label>{INPUT_LABELS?.[elemName]}</label>
-      <input type="text" name={elemName} value={elemValue} onChange={handleChange} />
+      <input type={elemType} name={elemName} value={elemValue} onChange={handleChange} />
       {error?.[elemName]?.isError && (<span className="error">{error?.[elemName]?.message}</span>)}
     </div>
   )
 
   const renderSignupForm = () => (
     <>
-    {renderInputElem(FNAME, firstName)}
-    {renderInputElem(LNAME, lastName)}
-    {renderInputElem(PHONE, phone)}
-    {renderInputElem(EMAIL, email)}
-    {renderInputElem(PASSWORD, password)}
-    {renderInputElem(CONFIRM_PASSWORD, confirmPassword)}
+    {renderInputElem(FNAME, firstName, "text")}
+    {renderInputElem(LNAME, lastName, "text")}
+    {renderInputElem(PHONE, phone, "text")}
+    {renderInputElem(EMAIL, email, "email")}
+    {renderInputElem(PASSWORD, password, "password")}
+    {renderInputElem(CONFIRM_PASSWORD, confirmPassword, "password")}
     <h3 className="switch-user">
-      <a onClick={() => setNewUser(false)}>Login</a>
+      <a onClick={() => setNewUser(false)}>Have an account? Login</a>
     </h3>
     </>
   )
@@ -65,7 +65,10 @@ export const Login = () => {
           newUser ? renderSignupForm() : renderLoginForm() 
         }
         <button type="submit">{formText}</button>
+        {error?.main?.isError && (<span className="error">{error?.main?.message}</span>)}
       </form>
     </div>
   )
 };
+
+export default Login;

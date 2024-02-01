@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';import { loginUser, signupUser } from '../../apis/user';
 import { loginUserAction }  from '../../redux/reducers/User.reducer';
 import { CONFIRM_PASSWORD, EMAIL, FNAME, LNAME, PASSWORD, PHONE } from './Login.constants';
+import Cookies from "universal-cookie";
 
 export const useLogin = () => {
   const [newUser, setNewUser] = useState(0);
@@ -14,30 +15,33 @@ export const useLogin = () => {
   const [phone, setPhone] = useState('');
   const formText = newUser ? 'Signup' : 'Login';
   const [error, setError] = useState({});
+  const cookies = new Cookies();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if(Object.keys(error)?.forEach(({isError}) => {
-      if(isError)
-        return;
-      else
-        newUser ? handleSignup() : handleLogin();
-    }));
+    const isError = Object.keys(error).every(({isError}) => isError);
+    if(isError)
+      return;
+    else
+      newUser ? handleSignup() : handleLogin();
   };
 
   const handleLogin = () => {
     loginUser({email, password}).then(resp => {
-      dispatch(loginUserAction(resp));
+      dispatch(loginUserAction(resp.data));
+      cookies.set('token', resp.data, { path: "/" });
       navigate('/');
+    }).catch(err => {
+      setError({...error, main: {isError: true, message: err?.response?.data?.message}});
     })
   };
 
   const handleSignup = () => {
     signupUser({firstName, lastName, email, phone, password}).then(() => {
-      navigate('/login');
+      setNewUser(1);
     })
   };
 
