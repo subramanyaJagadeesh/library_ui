@@ -18,3 +18,6 @@ export const loginUser = ({email, password}: LoginCredentials) =>
 
 export const signupUser = ({firstName, lastName, email, phone, password}: SignupValues) =>
   backend.post('/auth/signup', {firstName, lastName, email, phone, password});
+
+export const getUser = () => 
+  backend.get('/user/details');

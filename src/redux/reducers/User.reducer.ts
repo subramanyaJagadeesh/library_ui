@@ -7,8 +7,8 @@ const userReducer = createSlice({
   initialState: {
   } as User,
   reducers: {
-    loginUserAction: (state, action: PayloadAction<User>) => {
-      state = action.payload
+    loginUserAction: (_, action: PayloadAction<User>) => {
+      return action.payload
     },
   }
 });

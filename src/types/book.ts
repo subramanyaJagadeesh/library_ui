@@ -5,4 +5,5 @@ export interface Book {
   category: number,
   inventorySize: number,
   publishedDate: Date,
+  img: string,
 }

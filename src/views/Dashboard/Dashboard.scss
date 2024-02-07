@@ -3,5 +3,36 @@
 .dashboard {
   &-wrapper {
     @include container;
+    display: flex;
+    height: 100%;
+    margin-top: 100px;
+    flex-direction: column;
+    .info-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 80%;
+      .books{
+        &-container {
+          width: 50%;
+          .card{
+            width: 45%;
+            img{
+              height: 50%;
+              width: 100%;
+            }
+          }
+        }
+        &-wrapper{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+        
+      }
+      .borrow-container {
+        width: 50%;
+      }
+    }
   }
 }

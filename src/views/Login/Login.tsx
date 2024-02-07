@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { useLogin } from './useLogin';
 import { CONFIRM_PASSWORD, EMAIL, FNAME, INPUT_LABELS, LNAME, PASSWORD, PHONE, WELCOME_MESSAGE } from './Login.constants';
 
@@ -22,15 +23,15 @@ const Login = () => {
 
   const renderLoginForm = () => (
     <>
-    {renderInputElem(EMAIL, email)}
-    {renderInputElem(PASSWORD, password)}
+    {renderInputElem(EMAIL, email, EMAIL)}
+    {renderInputElem(PASSWORD, password, EMAIL)}
     <h3 className="switch-user">
-      Not a user? <a onClick={() => setNewUser(true)}>register</a>.
+      Not a user? <a onClick={() => setNewUser(0)}>register</a>.
     </h3>
     </>
   )
 
-  const renderInputElem = (elemName, elemValue, elemType) => (
+  const renderInputElem = (elemName: string, elemValue: string, elemType: string) => (
     <div className="input-container">
       <label>{INPUT_LABELS?.[elemName]}</label>
       <input type={elemType} name={elemName} value={elemValue} onChange={handleChange} />
@@ -47,7 +48,7 @@ const Login = () => {
     {renderInputElem(PASSWORD, password, "password")}
     {renderInputElem(CONFIRM_PASSWORD, confirmPassword, "password")}
     <h3 className="switch-user">
-      <a onClick={() => setNewUser(false)}>Have an account? Login</a>
+      <a onClick={() => setNewUser(0)}>Have an account? Login</a>
     </h3>
     </>
   )

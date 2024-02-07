@@ -1,33 +1,61 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
-import Navbar from "../../components/Navbar";
+import React from 'react';
+import Navbar from "../../components/Navbar/Navbar";
+import Card from "../../components/Card/Card";
+
 import './Dashboard.scss';
-import { getAllBooks } from "../../apis/books";
-import { Book } from "../../types/book";
+import useDashboard from './useDashboard';
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const cookies = new Cookies();
-  const [books, setBooks] = useState<Book[]>([]);
 
-  useEffect(() => {
-    getAllBooks().then(resp => setBooks(resp?.data));
-  }, [])
-
-  useEffect(() => {
-    if(!cookies.get('token'))
-      navigate('/login', {replace: true})
-  }, []);
+  const {
+    books,
+    borrowings,
+    handleRentClick,
+  } = useDashboard();
 
   return (
     <div className="dashboard-wrapper">
       <Navbar />
-      <h1>
-        Welcome to the public library!
-      </h1>
-      <div className="books-container">
-        
+      <div className="info-container">
+        <div className="books-container">
+          <h1>
+            All Books
+          </h1>
+          <div className="books-wrapper">
+            {
+              books?.map(book => 
+                <Card 
+                  header={book?.title} 
+                  src={book?.img} 
+                  body={book.author+ ", "+ new Date(book.publishedDate).toString()} 
+                  footer={<button className="button-secondary" onClick={() => handleRentClick(book?.id)}>Rent</button>} >
+                </Card>
+              )
+            }
+          </div>
+        </div>
+        <div className="borrow-container">
+          <h1>
+            All Borrowings
+          </h1>
+          {
+            borrowings?.map(book => (
+              <div className="book">
+                <h3>
+                  {book?.title}
+                </h3>
+                <img src="" />
+                <h3>
+                  {book.author}
+                </h3>
+                <h3>
+                  {new Date(book.publishedDate).toString()}
+                </h3>
+              </div>
+            ))
+          }
+         
+        </div>
       </div>
     </div>
   )
