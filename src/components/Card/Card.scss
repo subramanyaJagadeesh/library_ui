@@ -5,23 +5,6 @@
   overflow: hidden; /* Ensures the content fits within the borders */
   background-color: #fff; /* Card background color */
   margin: 10px; /* Add some margin around the card */
-  height: min-content;
-  img {
-    width: 100%; /* Make image fill the card width */
-    height: auto; /* Keep the image aspect ratio */
-  }
-  &-header {
-    padding: 2px 16px;
-    color: black; /* Text color */
-  }
-  &-body {
-    padding: 16px; /* Padding around the content */
-    color: black; /* Text color */
-  }
-  &-footer {
-    color: black; /* Text color */
-    text-align: center; /* Center the footer content */
-  }
 }
 .card:hover {
   transform: scale(1.05); /* Slightly enlarges the card */

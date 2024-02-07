@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -11,6 +11,14 @@ import { useAppDispatch } from './redux/hooks';
 import { getUser } from './apis/user';
 import { loginUserAction } from './redux/reducers/User.reducer';
 import { AxiosResponse } from 'axios';
+import Navbar from './components/Navbar/Navbar';
+
+const wrapNavbar = (body: ReactNode) => (
+  <>
+  <Navbar />
+  {body}
+  </>
+);
 
 const browserRouter = createBrowserRouter([
   {
@@ -19,7 +27,7 @@ const browserRouter = createBrowserRouter([
   },
   {
     path: '/',
-    element: <Dashboard />
+    element: wrapNavbar(<Dashboard />)
   }
 ]);
 
