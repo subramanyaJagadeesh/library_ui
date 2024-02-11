@@ -1,10 +1,11 @@
 import { BaseSyntheticEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';import { loginUser, signupUser } from '../../apis/user';
-import { loginUserAction }  from '../../redux/reducers/User.reducer';
+import { loginUser, signupUser } from '../../apis/user';
 import { CONFIRM_PASSWORD, EMAIL, FNAME, LNAME, PASSWORD, PHONE } from './Login.constants';
 import Cookies from "universal-cookie";
 import { Error, ErrorDetail } from '../../types/error';
+import { useAppDispatch } from '../../redux/hooks';
+import { tokenAction } from '../../redux/reducers/User.reducer';
 
 export const useLogin = () => {
   const initialError: ErrorDetail = {
@@ -24,7 +25,7 @@ export const useLogin = () => {
   const cookies = new Cookies();
   
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = (e: BaseSyntheticEvent) => {
@@ -38,8 +39,8 @@ export const useLogin = () => {
 
   const handleLogin = () => {
     loginUser({email, password}).then(resp => {
-      dispatch(loginUserAction(resp.data));
       cookies.set('token', resp.data, { path: "/" });
+      dispatch(tokenAction(resp?.data))
       navigate('/');
     }).catch(err => {
       setError({...error, main: {isError: true, message: err?.response?.data?.message}});

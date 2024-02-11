@@ -5,9 +5,8 @@ import {
 } from "react-router-dom";
 import Login from './views/Login/Login';
 import Dashboard from './views/Dashboard/Dashboard';
-import { Cookie } from './utils/cookies.js';
 import './styles/index.scss'
-import { useAppDispatch } from './redux/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { getUser } from './apis/user';
 import { loginUserAction } from './redux/reducers/User.reducer';
 import { AxiosResponse } from 'axios';
@@ -33,11 +32,13 @@ const browserRouter = createBrowserRouter([
 
 const App = () => {
   const dispatch = useAppDispatch();
+  const { token } = useAppSelector(s => s?.user);
+
   useEffect(() => {
-    if(Cookie.getCookies('token')){
+    if(token){
       getUser().then((resp: AxiosResponse) => {dispatch(loginUserAction(resp?.data))});
     }
-  }, []);
+  }, [token]);
 
   return(
     <RouterProvider router={browserRouter} />

@@ -24,7 +24,7 @@ const Login = () => {
   const renderLoginForm = () => (
     <>
     {renderInputElem(EMAIL, email, EMAIL)}
-    {renderInputElem(PASSWORD, password, EMAIL)}
+    {renderInputElem(PASSWORD, password, PASSWORD)}
     <h3 className="switch-user">
       Not a user? <a onClick={() => setNewUser(0)}>register</a>.
     </h3>

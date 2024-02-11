@@ -8,12 +8,15 @@ const userReducer = createSlice({
   } as User,
   reducers: {
     loginUserAction: (_, action: PayloadAction<User>) => {
-      return action.payload
+      return { ..._, ...action.payload}
     },
+    tokenAction: (_, action: PayloadAction<string>) => {
+      return { ..._, token: action.payload}
+    }
   }
 });
 
-export const { loginUserAction } = userReducer.actions;
+export const { loginUserAction, tokenAction } = userReducer.actions;
 
 export const selectUser = (state: RootState) => state.user;
 
